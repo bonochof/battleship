@@ -20,10 +20,9 @@ public class GameController : MonoBehaviour {
     if (Input.GetMouseButtonDown(leftButton)) {
       GameObject obj = GetClickFloor();
       if (obj != null) {
-        ChangeFloorColor(obj);
+        PutShip(obj);
         shipCount++;
       }
-      Debug.Log(shipCount);
     }
   }
   
@@ -37,6 +36,26 @@ public class GameController : MonoBehaviour {
     }
   }
   
+  int ConvertMatrixDimension(int x, int y) {
+    return x * 10 + y;
+  }
+  
+  void PutShip(GameObject obj) {
+    Transform hoge;
+    int pos;
+    
+    for (pos = 0; pos < floorList.Count; pos++) {
+      if (floorList[pos].name.CompareTo(obj.name) == 0) {
+        break;
+      }
+    }
+    
+    for (int i = 0; i < shipLength[shipCount]; i++) {
+      ChangeFloorColor(floorList[pos]);
+      pos += 10;
+    }
+  }
+  
   GameObject GetClickFloor() {
     GameObject result = null;
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -47,7 +66,7 @@ public class GameController : MonoBehaviour {
     return result;
   }
   
-  void ChangeFloorColor(GameObject obj) {
+  void ChangeFloorColor(Transform obj) {
     obj.GetComponent<Renderer>().material.color = Color.blue;
   }
 }
