@@ -3,14 +3,15 @@ using System.Collections;
 
 public class Floor : MonoBehaviour {
   void Update() {
-    GameObject obj = getClickObject();
+    GameObject obj = GetClickFloor();
     
     if (obj != null) {
+      ChangeFloorColor(obj);
       Debug.Log(obj.name);
     }
   }
   
-  public GameObject getClickObject() {
+  GameObject GetClickFloor() {
     GameObject result = null;
     if(Input.GetMouseButtonDown(0)) {
 　　　   Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -20,5 +21,13 @@ public class Floor : MonoBehaviour {
 　　　   }
   　 }
 　   return result;
+  }
+  
+  void ChangeFloorColor(GameObject obj) {
+    //GameObject myObj;
+    //myObj = GameObject.Find(obj.name);
+    //Renderer rend = obj.GetComponent<Renderer>();
+    //Debug.Log(rend.material.color);
+    obj.GetComponent<Renderer>().material.color = Color.blue;
   }
 }
