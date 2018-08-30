@@ -649,7 +649,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: 9a3bb7ac-d2dd-4cd4-b2ce-8dc869d0ae6c
-  projectName: Battleship (1)
+  projectName: Battleship
   organizationId: bonochof
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
