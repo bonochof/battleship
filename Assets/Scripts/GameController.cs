@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,22 +7,24 @@ public class GameController : MonoBehaviour {
   private static int leftButton = 0;
   private static int[] shipLength = {5, 4, 3, 3, 2};
   private int shipCount;
+  private int shipDir;
   private GameObject floorObj;
   private List<Transform> floorList;
   
   void Start() {
     shipCount = 0;
+    shipDir = 10;
     floorObj = GameObject.Find("Floor");
     floorList = new List<Transform>();
     SearchFloorObject();
   }
   
   void Update() {
+    CheckShipDir();
     if (Input.GetMouseButtonDown(leftButton)) {
       GameObject obj = GetClickFloor();
       if (obj != null) {
         PutShip(obj);
-        shipCount++;
       }
     }
   }
@@ -36,12 +39,19 @@ public class GameController : MonoBehaviour {
     }
   }
   
-  int ConvertMatrixDimension(int x, int y) {
-    return x * 10 + y;
+  void CheckShipDir() {
+    if (Input.GetKey(KeyCode.A)) {
+      shipDir = -10;
+    } else if (Input.GetKey(KeyCode.D)) {
+      shipDir = 10;
+    } else if (Input.GetKey(KeyCode.S)) {
+      shipDir = -1;
+    } else if (Input.GetKey(KeyCode.W)) {
+      shipDir = 1;
+    }
   }
   
   void PutShip(GameObject obj) {
-    Transform hoge;
     int pos;
     
     for (pos = 0; pos < floorList.Count; pos++) {
@@ -50,10 +60,29 @@ public class GameController : MonoBehaviour {
       }
     }
     
-    for (int i = 0; i < shipLength[shipCount]; i++) {
-      ChangeFloorColor(floorList[pos]);
-      pos += 10;
+    if (IsLegalPos(pos)) {
+      for (int i = 0; i < shipLength[shipCount]; i++) {
+        ChangeFloorColor(floorList[pos]);
+        pos += shipDir;
+      }
+      shipCount++;
     }
+  }
+  
+  bool IsLegalPos(int pos) {
+    for (int i = 0; i < shipLength[shipCount]; i++) {
+      if (pos < 0 || pos > 99) {
+        return false;
+      }
+      if (Math.Abs(shipDir) == 1) {
+        if ((pos - shipDir) / 10 - pos / 10 != 0) {
+          return false;
+        }
+      }
+      pos += shipDir;
+    }
+    
+    return true;
   }
   
   GameObject GetClickFloor() {
