@@ -93,6 +93,11 @@ public class GameController : MonoBehaviour {
   }
   
   bool IsLegalPos(int pos) {
+    // TODO: use tag
+    if (floorList[pos].GetComponent<Renderer>().material.color == Color.blue) {
+      return false;
+    }
+    
     for (int i = 0; i < shipLength[shipCount] - 1; i++) {
       pos += shipDir;
       
@@ -103,6 +108,11 @@ public class GameController : MonoBehaviour {
         if (pos / 10 != (pos - shipDir) / 10) {
           return false;
         }
+      }
+      
+      // TODO: use tag
+      if (floorList[pos].GetComponent<Renderer>().material.color == Color.blue) {
+        return false;
       }
     }
     
