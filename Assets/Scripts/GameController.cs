@@ -20,9 +20,9 @@ public class GameController : MonoBehaviour {
   }
   
   void Update() {
-    CheckShipDir();
+    InputShipDir();
     if (Input.GetMouseButtonDown(leftButton)) {
-      GameObject obj = GetClickFloor();
+      GameObject obj = GetMouseFloor();
       if (obj != null) {
         PutShip(obj);
       }
@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
     }
   }
   
-  void CheckShipDir() {
+  void InputShipDir() {
     if (Input.GetKey(KeyCode.A)) {
       shipDir = -10;
     } else if (Input.GetKey(KeyCode.D)) {
@@ -85,7 +85,7 @@ public class GameController : MonoBehaviour {
     return true;
   }
   
-  GameObject GetClickFloor() {
+  GameObject GetMouseFloor() {
     GameObject result = null;
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     RaycastHit hit = new RaycastHit();
