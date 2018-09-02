@@ -20,9 +20,11 @@ public class GameController : MonoBehaviour {
   }
   
   void Update() {
+    ClearFloorColor();
     InputShipDir();
+    GameObject obj = GetMouseFloor();
+    OverShip(obj);
     if (Input.GetMouseButtonDown(leftButton)) {
-      GameObject obj = GetMouseFloor();
       if (obj != null) {
         PutShip(obj);
       }
@@ -51,6 +53,23 @@ public class GameController : MonoBehaviour {
     }
   }
   
+  void OverShip(GameObject obj) {
+    int pos;
+    
+    for (pos = 0; pos < floorList.Count; pos++) {
+      if (floorList[pos].name.CompareTo(obj.name) == 0) {
+        break;
+      }
+    }
+    
+    if (IsLegalPos(pos)) {
+      for (int i = 0; i < shipLength[shipCount]; i++) {
+        DemoFloorColor(floorList[pos]);
+        pos += shipDir;
+      }
+    }
+  }
+  
   void PutShip(GameObject obj) {
     int pos;
     
@@ -70,16 +89,17 @@ public class GameController : MonoBehaviour {
   }
   
   bool IsLegalPos(int pos) {
-    for (int i = 0; i < shipLength[shipCount]; i++) {
+    for (int i = 0; i < shipLength[shipCount] - 1; i++) {
+      pos += shipDir;
+      
       if (pos < 0 || pos > 99) {
         return false;
       }
       if (Math.Abs(shipDir) == 1) {
-        if ((pos - shipDir) / 10 - pos / 10 != 0) {
+        if (pos / 10 != (pos - shipDir) / 10) {
           return false;
         }
       }
-      pos += shipDir;
     }
     
     return true;
@@ -93,6 +113,16 @@ public class GameController : MonoBehaviour {
       result = hit.collider.gameObject;
     }
     return result;
+  }
+  
+  void ClearFloorColor() {
+    foreach (Transform obj in floorList) {
+      obj.GetComponent<Renderer>().material.color = Color.gray;
+    }
+  }
+  
+  void DemoFloorColor(Transform obj) {
+    obj.GetComponent<Renderer>().material.color = Color.magenta;
   }
   
   void ChangeFloorColor(Transform obj) {
