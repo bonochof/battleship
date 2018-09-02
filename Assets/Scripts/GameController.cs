@@ -21,12 +21,16 @@ public class GameController : MonoBehaviour {
   
   void Update() {
     ClearFloorColor();
-    InputShipDir();
-    GameObject obj = GetMouseFloor();
-    OverShip(obj);
-    if (Input.GetMouseButtonDown(leftButton)) {
+    
+    if (shipCount < shipLength.Length) {
+      InputShipDir();
+      GameObject obj = GetMouseFloor();
       if (obj != null) {
-        PutShip(obj);
+        if (Input.GetMouseButtonDown(leftButton)) {
+          PutShip(obj);
+        } else {
+          OverShip(obj);
+        }
       }
     }
   }
@@ -117,12 +121,18 @@ public class GameController : MonoBehaviour {
   
   void ClearFloorColor() {
     foreach (Transform obj in floorList) {
-      obj.GetComponent<Renderer>().material.color = Color.gray;
+      // TODO: use tag
+      if (obj.GetComponent<Renderer>().material.color != Color.blue) {
+        obj.GetComponent<Renderer>().material.color = Color.gray;
+      }
     }
   }
   
   void DemoFloorColor(Transform obj) {
-    obj.GetComponent<Renderer>().material.color = Color.magenta;
+    // TODO: use tag
+    if (obj.GetComponent<Renderer>().material.color != Color.blue) {
+      obj.GetComponent<Renderer>().material.color = Color.magenta;
+    }
   }
   
   void ChangeFloorColor(Transform obj) {
