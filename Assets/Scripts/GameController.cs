@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
   private static int leftButton = 0;
@@ -32,6 +33,10 @@ public class GameController : MonoBehaviour {
           OverShip(obj);
         }
       }
+    }
+    
+    if (Input.GetMouseButtonDown(1)) {
+      SceneManager.LoadScene("MaingameScene", LoadSceneMode.Single);
     }
   }
   
