@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour {
+public class PutshipController : MonoBehaviour {
   private static int leftButton = 0;
   private static int[] shipLength = {5, 4, 3, 3, 2};
   private int shipCount;
