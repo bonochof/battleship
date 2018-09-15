@@ -10,7 +10,7 @@ public class PutshipController : MonoBehaviour {
   private int shipCount;
   private int shipDir;
   private GameObject floorObj;
-  private List<Transform> floorList;
+  public static List<Transform> floorList;
   
   void Start() {
     shipCount = 0;
