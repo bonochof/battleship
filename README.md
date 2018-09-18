@@ -3,8 +3,8 @@ Battleship
 
 Unity Battleship Game
 
-# Language
+## Language
 C#
 
-# Author
+## Author
 [bonochof](https://github.com/bonochof)
